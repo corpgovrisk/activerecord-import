@@ -470,7 +470,7 @@ class ActiveRecord::Base
           column = columns[j]
 
           # be sure to query sequence_name *last*, only if cheaper tests fail, because it's costly
-          if val.nil? && column.name == primary_key && !sequence_name.blank?
+          if val.nil? && (column.name == primary_key || column.name == 'human_id') && !sequence_name.blank?
              connection_memo.next_value_for_sequence(sequence_name)
           elsif column
             if column.respond_to?(:type_cast_from_user)                         # Rails 4.2 and higher
